@@ -116,12 +116,12 @@ foreach ($lib in $libsTodo) {
             }
         }
         if ($lib.downloads -and $lib.downloads.artifact -and $lib.downloads.artifact.url) {
-            $key = (($lib.name -split ":")[0..1]) -join ":"
+            $key = $lib.name
             $libMap[$key] = $lib
         }
         continue
     }
-    $key = (($lib.name -split ":")[0..1]) -join ":"
+    $key = $lib.name
     $libMap[$key] = $lib
 }
 $count = 0
