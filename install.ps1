@@ -78,6 +78,11 @@ function LibUrl($lib) {
 function LibFile($name) {
     return Join-Path $libDir (($name -replace ":", "_") + ".jar")
 }
+function LibKey($name) {
+    $parts = $name -split ":"
+    if ($parts.Count -ge 4) { return $name }
+    return ($parts[0..1]) -join ":"
+}
 function LibAllowed($lib) {
     if (!$lib.rules) { return $true }
     $allow = $false
@@ -116,12 +121,12 @@ foreach ($lib in $libsTodo) {
             }
         }
         if ($lib.downloads -and $lib.downloads.artifact -and $lib.downloads.artifact.url) {
-            $key = $lib.name
+            $key = LibKey $lib.name
             $libMap[$key] = $lib
         }
         continue
     }
-    $key = $lib.name
+    $key = LibKey $lib.name
     $libMap[$key] = $lib
 }
 $count = 0
