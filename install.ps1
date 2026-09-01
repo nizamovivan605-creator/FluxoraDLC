@@ -115,6 +115,10 @@ foreach ($lib in $libsTodo) {
                 if (!(Test-Path $nfile2)) { Dl $lib.downloads.classifiers."natives-windows-x86_64".url $nfile2; Expand-Archive -Path $nfile2 -DestinationPath $natDir -Force }
             }
         }
+        if ($lib.downloads -and $lib.downloads.artifact -and $lib.downloads.artifact.url) {
+            $key = (($lib.name -split ":")[0..1]) -join ":"
+            $libMap[$key] = $lib
+        }
         continue
     }
     $key = (($lib.name -split ":")[0..1]) -join ":"
