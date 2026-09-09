@@ -4,14 +4,14 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 
 $mcVer = "1.21.4"
-$base = Join-Path $env:APPDATA ".evaware"
+$base = Join-Path $env:APPDATA ".fluxoradlc"
 $runDir = Join-Path $base "run"
 $libDir = Join-Path $base "libraries"
 $natDir = Join-Path $base "natives"
 $assetsDir = Join-Path $base "assets"
 $modsDir = Join-Path $runDir "mods"
 
-function Log($m) { Write-Host ("[EvaWare] " + $m) }
+function Log($m) { Write-Host ("[FluxoraDLC] " + $m) }
 function EnsureDir($p) { if (!(Test-Path $p)) { New-Item -ItemType Directory -Path $p -Force | Out-Null } }
 $wc = New-Object System.Net.WebClient
 function Dl($url, $file) {
@@ -150,8 +150,8 @@ $fabVer = $fabMeta.metadata.versioning.versions.version | Where-Object { $_ -mat
 $fabJar = Join-Path $modsDir ("fabric-api-" + $fabVer + ".jar")
 if (!(Test-Path $fabJar)) { Dl ("https://maven.fabricmc.net/net/fabricmc/fabric-api/fabric-api/" + $fabVer + "/fabric-api-" + $fabVer + ".jar") $fabJar }
 
-$evaJar = Join-Path $modsDir "evaware-3.0.14.jar"
-$evaUrl = "https://github.com/nizamovivan605-creator/FluxoraDLC/releases/latest/download/evaware-3.0.14.jar"
+$evaJar = Join-Path $modsDir "FluxoraDLC-3.0.14.jar"
+$evaUrl = "https://github.com/nizamovivan605-creator/FluxoraDLC/releases/latest/download/FluxoraDLC-3.0.14.jar"
 $needEva = $true
 if (Test-Path $evaJar) {
     try {
@@ -159,7 +159,7 @@ if (Test-Path $evaJar) {
         if ((Get-Item $evaJar).Length -eq $remoteSize) { $needEva = $false }
     } catch { }
 }
-if ($needEva) { Log "Downloading EvaWare client..."; if (Test-Path $evaJar) { Remove-Item $evaJar -Force }; Dl $evaUrl $evaJar }
+if ($needEva) { Log "Downloading FluxoraDLC client..."; if (Test-Path $evaJar) { Remove-Item $evaJar -Force }; Dl $evaUrl $evaJar }
 
 # ---------- Assets ----------
 Log "Assets: index..."
@@ -189,7 +189,7 @@ $uuid = $g.Substring(0,8) + "-" + $g.Substring(8,4) + "-" + $g.Substring(12,4) +
 $javaArgs = @(
     "-Xmx2G",
     "-Djava.library.path=$natDir",
-    "-Dminecraft.launcher.brand=EvaWare",
+    "-Dminecraft.launcher.brand=FluxoraDLC",
     "-cp", $cpStr,
     "net.fabricmc.loader.impl.launch.knot.KnotClient",
     "--assetIndex", $vjson.assetIndex.id,
